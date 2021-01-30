@@ -4,8 +4,8 @@ import numpy as np
 
 from kaggle_environments import make, evaluate
 
-env = make("rps", debug = True)
-results = env.run(["rock.py", "neural_network.py"])
+env = make("rps", debug = True, configuration={ "epsideSteps": 200})
 
-print(str(results))
-
+env.run(
+    ["markov_agent.py", "neural_network.py"]
+)
