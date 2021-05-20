@@ -1,0 +1,45 @@
+
+
+    if debug:
+        debug_history()
+        debug_prediction(chances)
+        calculate_scores()
+        debug_next_move(my_next_move)
+
+def debug_history():
+    global classes, debug_window, op_moves, my_moves
+
+    print("Actual history kept for human:    " + str(op_moves.size))
+    print("Actual history kept for computer: " + str(my_moves.size))
+    for i in range(debug_window, 0, -1):
+        rounds_ago = i
+        print(str(op_moves))
+        op_move    = classes[op_moves[op_moves.size - i ]]
+        my_move    = classes[my_moves[my_moves.size - i ]]
+        print(str(rounds_ago) + " round(s) ago, you played: " + str(op_move) + ", and I played: " + str(my_move))
+
+def debug_prediction(chances):
+    i = 0
+    total = np.sum(chances)
+    chances = chances.T
+    for i in range(0, len(chances)):
+        move   = classes[i]
+        chance = chances[i]
+        print("Chance of " + move + ": " + str(chance/total))
+
+def debug_next_move(my_next_move):
+    print("Computer will play: " + classes[my_next_move])
+
+def calculate_scores():
+    global my_score, op_score, my_moves, op_moves
+
+    my_last_move = my_moves[-1]
+    op_last_move = op_moves[-1]
+
+    if my_last_move == op_last_move:
+        print("Draw!!")
+    elif (my_last_move - 1) % 3 == op_last_move:
+        my_score = my_score + 1
+    else:
+        op_score = op_score + 1
+    print("Computer: " + str(my_score) + "\tHuman: " + str(op_score))
